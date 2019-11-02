@@ -15,6 +15,8 @@ const getTemplate = (...args: any[]) => {
   return text;
 };
 
+(window as any).__css_bem = 0;
+
 const css = (...args: any[]) => {
   let text = getTemplate(...args);
 
@@ -30,11 +32,8 @@ const css = (...args: any[]) => {
 };
 
 css.bem = (bem = 'bem-') => {
-  const r = `c${Date.now()
-    .toString(32)
-    .slice(4)}${Math.random()
-    .toString(32)
-    .slice(2)}`;
+  (window as any).__css_bem += 1;
+  const r = `c${(window as any).__css_bem}`;
 
   return (...args: any[]) => {
     const exp = new RegExp(bem, 'g');
