@@ -1,15 +1,22 @@
-const css = (template: any, ...args: any[]) => {
+const getTemplate = (...args: any[]) => {
+  const [template, ...param] = args;
+
   let text = '';
   if (typeof template === 'string') {
     text = template;
-  } else {
+  } else if (template) {
     template.forEach((v: any, i: number) => {
       text += v;
-      if (args[i]) {
-        text += args[i];
+      if (param[i]) {
+        text += param[i];
       }
     });
   }
+  return text;
+};
+
+const css = (...args: any[]) => {
+  let text = getTemplate(...args);
 
   return (bem?: Function) => {
     const ele = document.createElement('style');
@@ -22,15 +29,6 @@ const css = (template: any, ...args: any[]) => {
   };
 };
 
-css.class = <T>(target: T, className: string, bem?: Function): T => {
-  if (bem) {
-    className = bem(className);
-  }
-  (target as any).setAttribute('class', className);
-
-  return target;
-};
-
 css.bem = (bem = 'bem-') => {
   const r = `c${Date.now()
     .toString(32)
@@ -38,9 +36,9 @@ css.bem = (bem = 'bem-') => {
     .toString(32)
     .slice(2)}`;
 
-  return (text: string) => {
+  return (...args: any[]) => {
     const exp = new RegExp(bem, 'g');
-
+    let text = getTemplate(...args);
     text = text.replace(exp, `${r}-`);
     return text;
   };

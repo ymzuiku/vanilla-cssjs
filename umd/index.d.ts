@@ -1,6 +1,5 @@
 declare const css: {
-    (template: any, ...args: any[]): (bem?: Function | undefined) => void;
-    class<T>(target: T, className: string, bem?: Function | undefined): T;
-    bem(bem?: string): (text: string) => string;
+    (...args: any[]): (bem?: Function | undefined) => void;
+    bem(bem?: string): (...args: any[]) => string;
 };
 export default css;
