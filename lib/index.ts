@@ -1,3 +1,7 @@
+if (!(window as any).__css_bem) {
+  (window as any).__css_bem = 1;
+}
+
 const getTemplate = (...args: any[]) => {
   const [template, ...param] = args;
 
@@ -14,8 +18,6 @@ const getTemplate = (...args: any[]) => {
   }
   return text;
 };
-
-(window as any).__css_bem = 0;
 
 const css = (...args: any[]) => {
   let text = getTemplate(...args);
