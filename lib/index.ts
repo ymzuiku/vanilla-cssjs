@@ -18,7 +18,6 @@ const css = (template: any, ...args: any[]) => {
     }
     ele.type = 'text/css';
     ele.textContent = text;
-    console.log(text);
     document.head.appendChild(ele);
   };
 };
@@ -42,7 +41,6 @@ css.bem = (bem = 'bem-') => {
   return (text: string) => {
     const exp = new RegExp(bem, 'g');
 
-    console.log(exp);
     text = text.replace(exp, `${r}-`);
     return text;
   };
