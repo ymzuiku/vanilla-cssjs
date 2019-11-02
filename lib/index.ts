@@ -35,7 +35,7 @@ const css = (...args: any[]) => {
 
 css.bem = (bem = 'bem-') => {
   (window as any).__css_bem += 1;
-  const r = `c${(window as any).__css_bem}`;
+  const r = `bem${(window as any).__css_bem}`;
 
   return (...args: any[]) => {
     const exp = new RegExp(bem, 'g');
