@@ -23,7 +23,7 @@ css`
   }
 `(bem);
 
-box.classList.add(bem('bem-box'));
+box.classList.add(bem`bem-box`));
 ```
 
 ## VSCode
