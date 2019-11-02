@@ -33,12 +33,14 @@ const css = (...args: any[]) => {
   };
 };
 
-css.bem = (bem = 'bem-') => {
+css.bem = (reg = 'bem-', bem?: string) => {
   (window as any).__css_bem += 1;
-  const r = `bem${(window as any).__css_bem}`;
+  bem = bem || (window as any).__css_bem;
+
+  const r = `bem${bem}`;
 
   return (...args: any[]) => {
-    const exp = new RegExp(bem, 'g');
+    const exp = new RegExp(reg, 'g');
     let text = getTemplate(...args);
     text = text.replace(exp, `${r}-`);
     return text;

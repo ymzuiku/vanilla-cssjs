@@ -1,5 +1,5 @@
 declare const css: {
     (...args: any[]): (bem?: Function | undefined) => void;
-    bem(bem?: string): (...args: any[]) => string;
+    bem(reg?: string, bem?: string | undefined): (...args: any[]) => string;
 };
 export default css;
