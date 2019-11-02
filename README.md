@@ -15,7 +15,7 @@ import style from 'vanilla-cssjs';
 
 const box = document.getElementById('box');
 
-const bem = css.bem('bem-', 'hello-box'); // use hello-box- replace bem-
+const bem = css.bem('bem-', 'hello-box-'); // use hello-box- replace bem-
 
 css`
   .bem-box {
