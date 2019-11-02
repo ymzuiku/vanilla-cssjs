@@ -1,7 +1,3 @@
-if (!(window as any).__css_bem) {
-  (window as any).__css_bem = 1;
-}
-
 const getTemplate = (...args: any[]) => {
   const [template, ...param] = args;
 
@@ -35,8 +31,9 @@ const css = (...args: any[]) => {
 
 css.bem = (reg = 'bem-', bem?: string) => {
   if (!bem) {
-    (window as any).__css_bem += 1;
-    bem = `bem-${(window as any).__css_bem}-`;
+    bem = `bem${Math.random()
+      .toString(32)
+      .slice(2)}-`;
   }
 
   return (...args: any[]) => {
