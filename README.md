@@ -15,15 +15,15 @@ import style from 'vanilla-cssjs';
 
 const box = document.getElementById('box');
 
-const bem = 'about-project-name';
+const bem = css.bem('bem-'); // default arg is 'bem-'
 
 css`
-  .-bem-box {
+  .bem-box {
     background: #f00;
   }
 `(bem);
 
-css.class(box, '-bem-box', bem);
+css.class(box, 'bem-box', bem);
 ```
 
 ## VSCode

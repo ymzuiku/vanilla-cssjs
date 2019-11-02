@@ -11,10 +11,10 @@ const css = (template: any, ...args: any[]) => {
     });
   }
 
-  return (bem?: string) => {
+  return (bem?: Function) => {
     const ele = document.createElement('style');
     if (bem) {
-      text = text.replace(/(\-bem\-)/g, `${bem}-`);
+      text = bem(text);
     }
     ele.type = 'text/css';
     ele.textContent = text;
@@ -23,19 +23,29 @@ const css = (template: any, ...args: any[]) => {
   };
 };
 
-css.class = <T>(target: T, className: string, bem?: string): T => {
+css.class = <T>(target: T, className: string, bem?: Function): T => {
   if (bem) {
-    className = className.replace(/(\-bem\-)/g, `${bem}-`);
+    className = bem(className);
   }
   (target as any).setAttribute('class', className);
 
   return target;
 };
 
-css.bem = () => {
-  return `bem${Date.now().toString(32)}${Math.random()
+css.bem = (bem = 'bem-') => {
+  const r = `c${Date.now()
+    .toString(32)
+    .slice(4)}${Math.random()
     .toString(32)
     .slice(2)}`;
+
+  return (text: string) => {
+    const exp = new RegExp(bem, 'g');
+
+    console.log(exp);
+    text = text.replace(exp, `${r}-`);
+    return text;
+  };
 };
 
 export default css;
