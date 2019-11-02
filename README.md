@@ -25,3 +25,9 @@ css`
 
 css.class(box, '-bem-box', bem);
 ```
+
+## VSCode
+
+you can install es6-string-css:
+
+[https://marketplace.visualstudio.com/items?itemName=bashmish.es6-string-css](https://marketplace.visualstudio.com/items?itemName=bashmish.es6-string-css)
