@@ -8,25 +8,45 @@
 $ npm install --save vanilla-cssjs
 ```
 
-## Use
+## Simple Example
+
 
 ```js
-import style from 'vanilla-cssjs';
+import css from 'vanilla-cssjs';
+
+css`
+  body {
+    color: #555;
+  }
+  .title {
+    font-size: 30px;
+  }
+`;
+```
+
+## Use BEM css
+
+```js
+import css from 'vanilla-cssjs';
 
 const box = document.getElementById('box');
 
-const bem = css.bem('bem-', 'hello-box-'); // use hello-box- replace bem-
+// ._bod：Start at underline is Random BEM name
+// .text: It is global css
 
-css`
-  .bem-box {
+const bem = css`
+  .text {
+    color: #555;
+  }
+  ._box {
     background: #f00;
   }
-`(bem);
+`;
 
-box.classList.add(bem`bem-box`));
+box.classList.add(bem`text _box`));
 ```
 
-## VSCode
+## VSCode Plugin
 
 you can install es6-string-css:
 

@@ -1,8 +1,8 @@
 const getTemplate = (...args: any[]) => {
   const [template, ...param] = args;
 
-  let text = '';
-  if (typeof template === 'string') {
+  let text = "";
+  if (typeof template === "string") {
     text = template;
   } else if (template) {
     template.forEach((v: any, i: number) => {
@@ -15,32 +15,30 @@ const getTemplate = (...args: any[]) => {
   return text;
 };
 
-const css = (...args: any[]) => {
-  let text = getTemplate(...args);
-
-  return (bem?: Function) => {
-    const ele = document.createElement('style');
-    if (bem) {
-      text = bem(text);
-    }
-    ele.type = 'text/css';
-    ele.textContent = text;
-    document.head.appendChild(ele);
-  };
-};
-
-css.bem = (reg = 'bem-', bem?: string) => {
-  if (!bem) {
-    bem = `bem${Math.random()
-      .toString(32)
-      .slice(2)}-`;
+function hash() {
+  if (!(window as any).__cssin_prefix) {
+    (window as any).__cssin_prefix = 1;
   }
+  (window as any).__cssin_prefix += 1;
+  return (window as any).__cssin_prefix;
+}
 
-  return (...args: any[]) => {
-    const exp = new RegExp(reg, 'g');
-    let text = getTemplate(...args);
-    text = text.replace(exp, bem!);
-    return text;
+const css = (...args: any[]) => {
+  const prefix = `bem-${hash()}-`;
+  const exp = new RegExp("._", "g");
+  const text = getTemplate(...args).replace(exp, "." + prefix);
+
+  const ele = document.createElement("style");
+  ele.type = "text/css";
+  ele.setAttribute("data-bem", prefix);
+  ele.textContent = text;
+  document.head.appendChild(ele);
+
+  return function(...args: any[]) {
+    let text = " " + getTemplate(...args);
+    const exp = new RegExp(" _", "g");
+    text = text.replace(exp, " " + prefix);
+    return text.replace(' ', '');
   };
 };
 
