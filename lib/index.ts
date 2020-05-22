@@ -15,31 +15,30 @@ const getTemplate = (...args: any[]) => {
   return text;
 };
 
-function hash() {
-  if (!(window as any).__cssin_prefix) {
-    (window as any).__cssin_prefix = 1;
-  }
-  (window as any).__cssin_prefix += 1;
-  return (window as any).__cssin_prefix;
+function code() {
+  return (
+    Date.now().toString().slice(7, 13) +
+    Math.random().toString().replace(".", "").slice(2, 8)
+  );
 }
 
-const css = (...args: any[]) => {
-  const prefix = `bem-${hash()}-`;
-  const exp = new RegExp("._", "g");
-  const text = getTemplate(...args).replace(exp, "." + prefix);
+function css(...args: any) {
+  let str = getTemplate(...args);
+  const bem = "c" + code() + "-";
+  const rex = new RegExp(css.bem, "g");
+  str = str.replace(rex, bem);
 
   const ele = document.createElement("style");
+  ele.textContent = str;
   ele.type = "text/css";
-  ele.setAttribute("data-bem", prefix);
-  ele.textContent = text;
-  document.head.appendChild(ele);
+  ele.setAttribute("data-bem", bem);
+  document.head.append(ele);
 
-  return function(...args: any[]) {
-    let text = " " + getTemplate(...args);
-    const exp = new RegExp(" _", "g");
-    text = text.replace(exp, " " + prefix);
-    return text.replace(' ', '');
+  return (...args: any) => {
+    return bem + getTemplate(...args);
   };
-};
+}
+
+css.bem = "__";
 
 export default css;

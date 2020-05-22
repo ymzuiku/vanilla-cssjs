@@ -8,22 +8,6 @@
 $ npm install --save vanilla-cssjs
 ```
 
-## Simple Example
-
-
-```js
-import css from 'vanilla-cssjs';
-
-css`
-  body {
-    color: #555;
-  }
-  .title {
-    font-size: 30px;
-  }
-`;
-```
-
 ## Use BEM css
 
 ```js
@@ -31,19 +15,21 @@ import css from 'vanilla-cssjs';
 
 const box = document.getElementById('box');
 
-// ._bod：Start at underline is Random BEM name
+// .__bod：Start at underline is Random BEM name
 // .text: It is global css
 
 const bem = css`
   .text {
     color: #555;
   }
-  ._box {
+  .__box {
     background: #f00;
   }
 `;
 
-box.classList.add(bem`text _box`));
+console.log(bem`box`); // out .c9238498493_box
+
+box.classList.add('text', bem`box`);
 ```
 
 ## VSCode Plugin
