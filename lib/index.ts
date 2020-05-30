@@ -39,6 +39,16 @@ function css(...args: any) {
   };
 }
 
+css.merge = (cssMap: { [key: string]: any }) => {
+  let css = "";
+  for (const key in cssMap) {
+    if (cssMap[key]) {
+      css += key + " ";
+    }
+  }
+  return css;
+};
+
 css.bem = "__";
 
 export default css;
