@@ -22,14 +22,17 @@ const bem = css`
   .text {
     color: #555;
   }
-  .__box {
+  ._box {
     background: #f00;
   }
-`;
+`('project-bem');
 
-console.log(bem`box`); // out .c9238498493_box
+console.log(bem`box`); // out .project-bem-box
 
 box.classList.add('text', bem`box`);
+
+// append <style>...css</style> in document.head
+bem.init();
 ```
 
 ## VSCode Plugin

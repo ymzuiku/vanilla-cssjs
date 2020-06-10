@@ -15,40 +15,29 @@ const getTemplate = (...args: any[]) => {
   return text;
 };
 
-function code() {
-  return (
-    Date.now().toString().slice(7, 13) +
-    Math.random().toString().replace(".", "").slice(2, 8)
-  );
-}
-
 function css(...args: any) {
-  let str = getTemplate(...args);
-  const bem = "c" + code() + "-";
-  const rex = new RegExp(css.bem, "g");
-  str = str.replace(rex, bem);
+  return (bemStr: string) => {
+    let str = getTemplate(...args);
+    const pix = bemStr + "-";
+    const rex = new RegExp("._", "g");
+    str = str.replace(rex, "." + pix);
 
-  const ele = document.createElement("style");
-  ele.textContent = str;
-  ele.type = "text/css";
-  ele.setAttribute("data-bem", bem);
-  document.head.append(ele);
+    const bem = (...args: any) => {
+      return pix + getTemplate(...args);
+    };
+    bem.init = () => {
+      if (document.head.querySelector("." + pix)) {
+        return;
+      }
+      const ele = document.createElement("style");
+      ele.textContent = str;
+      ele.type = "text/css";
+      ele.className = pix;
+      document.head.append(ele);
+    };
 
-  return (...args: any) => {
-    return bem + getTemplate(...args);
+    return bem;
   };
 }
-
-css.merge = (cssMap: { [key: string]: any }) => {
-  let css = "";
-  for (const key in cssMap) {
-    if (cssMap[key]) {
-      css += key + " ";
-    }
-  }
-  return css;
-};
-
-css.bem = "__";
 
 export default css;

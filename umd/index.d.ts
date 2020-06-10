@@ -1,8 +1,5 @@
-declare function css(...args: any): (...args: any) => string;
-declare namespace css {
-    var merge: (cssMap: {
-        [key: string]: any;
-    }) => string;
-    var bem: string;
-}
+declare function css(...args: any): (bemStr: string) => {
+    (...args: any): string;
+    init(): void;
+};
 export default css;
