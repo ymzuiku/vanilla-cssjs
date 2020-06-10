@@ -16,13 +16,11 @@ const getTemplate = (...args: any[]) => {
 };
 
 function css(...args: any) {
-  return (bemStr?: string) => {
+  return (bemStr: string) => {
     let str = getTemplate(...args);
     const pix = bemStr + "-";
-    if (bemStr) {
-      const rex = new RegExp("._", "g");
-      str = str.replace(rex, "." + pix);
-    }
+    const rex = new RegExp("._", "g");
+    str = str.replace(rex, "." + pix);
 
     const bem = (...args: any) => {
       return pix + getTemplate(...args);
