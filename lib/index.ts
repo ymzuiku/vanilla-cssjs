@@ -15,6 +15,8 @@ const getTemplate = (...args: any[]) => {
   return text;
 };
 
+const cache = {} as any;
+
 function css(...args: any) {
   return (bemStr: string) => {
     let str = getTemplate(...args);
@@ -26,9 +28,14 @@ function css(...args: any) {
       return pix + getTemplate(...args);
     };
     bem.init = () => {
-      if (document.head.querySelector("." + pix)) {
+      if (cache[pix]) {
         return;
       }
+      if (document.head.querySelector("." + pix)) {
+        cache[pix] = true;
+        return;
+      }
+      cache[pix] = true;
       const ele = document.createElement("style");
       ele.textContent = str;
       ele.type = "text/css";
